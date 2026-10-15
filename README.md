@@ -1,100 +1,60 @@
-# 🚀 FAANG Engineer Path
+# Software Engineering Growth Roadmap
 
-**A complete, hands-on journey to becoming a top-tier software engineer prepared for FAANG-level companies (Google, Meta, Amazon, Netflix, etc).**  
-This repository serves as a structured path from core programming fundamentals to advanced architecture, including real-world projects, cloud deployment, data engineering, and technical interview preparation.
+**A personal learning roadmap for advanced backend engineering, architecture, and technical interviews.**
 
----
+> **Repository status:** planning/documentation only. This repository currently contains a roadmap and a license, **not** an implemented curriculum, project collection, or benchmark of completed interview exercises.
 
-## 🧭 Repository Structure (by topic)
+The goal is to make learning goals specific, practical, and measurable without confusing planned work with finished projects.
 
-> Each directory represents a key discipline required to master software engineering at scale.
+## Focus areas
 
-### 1️⃣ Programming Fundamentals
-- Python and Java (types, conditionals, loops, functions)
-- I/O operations, data structures (lists, dicts, arrays), exception handling
+| Track | Topics to explore | Evidence to produce |
+| --- | --- | --- |
+| 01 — CS fundamentals | Algorithms, data structures, complexity | Explained solutions, complexity analysis, tests |
+| 02 — Java backend | Spring Boot, concurrency, persistence, APIs | Documented service, unit and integration tests |
+| 03 — Software design | DDD, modularity, domain boundaries, API contracts | Architecture decision records, diagrams, trade-offs |
+| 04 — Distributed systems | Consistency, queues, idempotency, failures | Resilience experiments, failure-mode tests |
+| 05 — Cloud & delivery | Containers, CI/CD, infrastructure, observability | Reproducible deployments and operational notes |
+| 06 — Interviews | Coding exercises, system design, communication | Recorded problem-solving notes and mock interview feedback |
+| 07 — Open source | Reviewing, reporting, collaborating | Useful issues and pull requests with context |
 
-### 2️⃣ Logic & Algorithms
-- Problem solving with LeetCode, HackerRank, Exercism
-- Recursion, sorting, searching, dynamic programming
-- Graphs, trees, tries, union-find, greedy & backtracking
+The topics above are **study targets**. Their presence here does not mean they have been completed.
 
-### 3️⃣ Data Structures
-- Arrays, linked lists, stacks, queues
-- Hash maps, sets, binary trees, heaps
-- Graphs (BFS, DFS), adjacency list/matrix implementations
+## Suggested workflow
 
-### 4️⃣ Object-Oriented Design & Design Patterns
-- OOP principles: encapsulation, inheritance, polymorphism, abstraction
-- SOLID principles
-- GoF Design Patterns (Factory, Strategy, Observer, Singleton, etc.)
+For each topic:
 
-### 5️⃣ Backend Engineering – Java | Python | Go
-- RESTful APIs with Spring Boot, FastAPI, Go
-- PostgreSQL, Redis, MongoDB integration
-- Automated testing: JUnit, Pytest, Go test
-- Build tools: Maven, Gradle, Go modules
+1. **Define a problem** — a scenario and the constraints that matter.
+2. **Implement a minimal solution** — avoid introducing architecture without a reason.
+3. **Prove behavior** — tests, repeatable benchmarks, or validated examples.
+4. **Explain trade-offs** — why this design was chosen and what could go wrong.
+5. **Document the outcome** — what was measured, learned, or left unfinished.
 
-### 6️⃣ Data Analysis & Applied Statistics
-- Python: pandas, NumPy, seaborn, matplotlib
-- R: ggplot2, dplyr, tidyverse
-- Exploratory data analysis and data storytelling
-- Public datasets (Kaggle), dashboards and reporting
+## Example learning backlog
 
-### 7️⃣ Cloud & DevOps
-- Docker, Kubernetes, Helm
-- Google Cloud Platform (GCP): GKE, Cloud Run, Pub/Sub, BigQuery
-- CI/CD pipelines: GitHub Actions, Jenkins, ArgoCD
-- Observability: Prometheus, Grafana, Stackdriver
-- Security: OAuth2, JWT, API hardening
+- [ ] Implement an idempotent payment command using Java and a relational database.
+- [ ] Compare optimistic locking and explicit serialization under concurrent writes.
+- [ ] Document retry, timeout, and dead-letter strategies for asynchronous messaging.
+- [ ] Create an example REST API with authorization and integration tests.
+- [ ] Publish a system-design case study with clear constraints and alternative solutions.
+- [ ] Contribute a meaningful improvement to an external open-source repository.
 
-### 8️⃣ Software Architecture & Distributed Systems
-- Clean Architecture, Hexagonal, Onion, DDD
-- Microservices, event-driven systems
-- Messaging with Kafka, RabbitMQ
-- CQRS, Event Sourcing, SAGA Pattern
-- System Design: scalability, availability, consistency
+These unchecked items are ideas, **not promises or completed work**. Their sequence and scope can change.
 
-### 9️⃣ Advanced Algorithms & FAANG Interview Prep
-- Big-O analysis, memory/time complexity
-- Hard-level LeetCode, Codeforces, AtCoder challenges
-- 300+ solved problems repository
-- Weekly contests and mock interviews (Pramp, Exponent)
+## Related projects
 
-### 🔟 Final Project & Open Source Contribution
-- Fullstack platform (Go + Python + React/Angular)
-- Microservices architecture, message brokers, real deployments
-- CI/CD, automated tests, monitoring
-- Technical documentation & architectural decisions
-- Contributions to open source (Spring, Apache, CLI tools)
+Actual implementations and public artifacts are hosted in separate repositories:
 
----
+- [Universal Domain Rules Discovery](https://github.com/ghenriquec/universal-domain-rules-discover-skill) — agent-driven discovery, schema validation, and traceability.
+- [QA Sentinel](https://github.com/ghenriquec/qa-sentinel-skill) — evidence-based QA audit protocol.
+- [Clinic Management System](https://github.com/ghenriquec/clinic-management-system) — early-stage Next.js application prototype.
 
-## 🛠 Technologies
+For an overview of my professional background, visit [my GitHub profile](https://github.com/ghenriquec).
 
-`Java`, `Python`, `Go`, `Spring Boot`, `FastAPI`, `PostgreSQL`, `Redis`, `MongoDB`,  
-`Kafka`, `RabbitMQ`, `Docker`, `Kubernetes`, `GCP`, `React`, `Angular`, `Prometheus`, `Grafana`
+## Author
 
----
+**Guilherme Henrique** · [LinkedIn](https://www.linkedin.com/in/guihenriquecoelho/) · [GitHub](https://github.com/ghenriquec)
 
-## 🎯 Purpose
+## License
 
-This repository is designed to serve as:
-
-- ✅ A complete study roadmap for becoming a world-class Software Engineer
-- ✅ A professional portfolio for FAANG/Big Tech interviews
-- ✅ A collection of real-world projects to demonstrate advanced skills
-
----
-
-## 💼 Author
-
-**Built and maintained by Guilherme Henrique Ceoelho **  
-Software Engineer in pursuit of technical mastery and global impact.  
-Connect with me: [LinkedIn](www.linkedin.com/in/guihenriquecoelho) | [GitHub](https://github.com/ghenriquec)
-
----
-
-## ⭐ Contribute or Fork
-
-Feel free to clone, fork, or contribute to this repository.  
-If you found it valuable, consider leaving a ⭐ to support the project!
+See [LICENSE](LICENSE).
