@@ -88,7 +88,7 @@ public final class PostgresLedger {
                 }
 
                 // Consistent lock order: every transaction locks the
-                // lexicographically smaller account before the larger one.
+                // lexicographically smaller account before the larger one.\n                // NO KEY UPDATE coexists with foreign-key KEY SHARE checks.
                 String firstId = source.compareTo(destination) < 0 ? source : destination;
                 String secondId = source.compareTo(destination) < 0 ? destination : source;
                 long firstBalance = lockedBalance(connection, firstId);
@@ -155,7 +155,7 @@ public final class PostgresLedger {
 
     private long lockedBalance(Connection connection, String id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT balance_minor FROM accounts WHERE id = ? FOR UPDATE")) {
+                "SELECT balance_minor FROM accounts WHERE id = ? FOR NO KEY UPDATE")) {
             statement.setString(1, id);
             try (ResultSet result = statement.executeQuery()) {
                 if (!result.next()) {
