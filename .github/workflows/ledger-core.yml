@@ -1,0 +1,30 @@
+name: Ledger core — Java concurrency lab
+
+on:
+  push:
+    paths:
+      - "labs/ledger-core/**"
+      - ".github/workflows/ledger-core.yml"
+  pull_request:
+    paths:
+      - "labs/ledger-core/**"
+      - ".github/workflows/ledger-core.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          cache-dependency-path: labs/ledger-core/pom.xml
+      - name: Verify concurrency and idempotency tests
+        run: mvn --batch-mode --no-transfer-progress -f labs/ledger-core/pom.xml verify
