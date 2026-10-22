@@ -10,7 +10,8 @@ This repository combines **implemented, testable labs** with a personal study ro
 
 | Lab | Language | Demonstrated concepts | Evidence |
 | --- | --- | --- | --- |
-| **[Ledger Core](labs/ledger-core/README.md)** | Java 21 | Atomic money movements in minor units, idempotency, ordered locks, contention and retry semantics | [JUnit tests](labs/ledger-core/src/test/java/dev/ghenriquec/ledger/LedgerTest.java) · [architecture ADR](labs/ledger-core/ARCHITECTURE.md) · [CI](.github/workflows/ledger-core.yml) |
+| **[Ledger Core](labs/ledger-core/README.md)** | Java 21 | In-memory atomic transfers, idempotency, ordered locks, contention and retry semantics | [JUnit tests](labs/ledger-core/src/test/java/dev/ghenriquec/ledger/LedgerTest.java) · [ADR](labs/ledger-core/ARCHITECTURE.md) · [CI](.github/workflows/ledger-core.yml) |
+| **[PostgreSQL Ledger](labs/postgres-ledger/README.md)** | Java 21, JDBC, PostgreSQL | Database transactions, durable idempotency, row locks, rollback and concurrent contention | [Integration tests](labs/postgres-ledger/src/test/java/dev/ghenriquec/ledger/sql/PostgresLedgerTest.java) · [ADR](labs/postgres-ledger/ARCHITECTURE.md) · [CI](.github/workflows/postgres-ledger.yml) |
 
 ### Run Ledger Core
 
@@ -18,14 +19,14 @@ This repository combines **implemented, testable labs** with a personal study ro
 mvn -f labs/ledger-core/pom.xml --batch-mode verify
 ```
 
-The lab is intentionally **in-memory and single-process**. It is not an HTTP API, database-backed ledger, or financial product. Its [architecture note](labs/ledger-core/ARCHITECTURE.md) explicitly discusses linearization, failure semantics, contention, durability gaps, and a safe evolution path.
+**Two distinct implementation boundaries:** Ledger Core is **in-memory and single-process**, while PostgreSQL Ledger uses durable relational transactions and integration tests against a disposable database. Neither is an HTTP API or a financial product. Their respective [in-memory](labs/ledger-core/ARCHITECTURE.md) and [database-backed](labs/postgres-ledger/ARCHITECTURE.md) architecture notes explain guarantees, failure modes and trade-offs.
 
 ## Engineering tracks
 
 | Area | Practical goal | Progress |
 | --- | --- | --- |
 | Java and concurrency | Demonstrate atomic transfers, idempotency, lock ordering, and race tests | **Implemented:** Ledger Core lab |
-| Persistence and consistency | Use transaction boundaries, locking and replayable idempotency responses | Planned |
+| Persistence and consistency | Use transaction boundaries, row locking and replayable idempotency responses | **Implemented as a PostgreSQL lab**; production controls remain out of scope |
 | Distributed messaging | Study outbox, at-least-once delivery, deduplication and retry backoff | Planned |
 | Reliability | Define failure modes, SLOs, runbooks and observability | Planned |
 | System design | Publish case studies with constraints, alternatives and consequences | In progress: [Ledger Core ADR](labs/ledger-core/ARCHITECTURE.md) |
@@ -50,7 +51,7 @@ The lab is intentionally **in-memory and single-process**. It is not an HTTP API
 
 ## Next lab backlog
 
-- [ ] Compare the in-memory model to durable PostgreSQL transactions with unique idempotency keys.
+- [x] Compare the in-memory model to PostgreSQL transactions with durable idempotency keys.
 - [ ] Add controlled failure injection and a repeatable concurrency stress-test harness.
 - [ ] Evaluate optimistic locking against ordered pessimistic locks.
 - [ ] Produce an architecture case study on event delivery and reconciliation.
