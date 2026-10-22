@@ -2,7 +2,7 @@
 
 ## Decision
 
-Store account balances and committed idempotency responses in PostgreSQL. Each transfer is one **READ COMMITTED** database transaction (the PostgreSQL default), with a unique idempotency key and row locks acquired in stable account-ID order.
+Store account balances and committed idempotency responses in PostgreSQL. Each transfer is one **READ COMMITTED** database transaction (the PostgreSQL default), with a unique idempotency key and non-key row locks acquired in stable account-ID order.
 
 ## Transfer steps
 
@@ -10,9 +10,10 @@ Store account balances and committed idempotency responses in PostgreSQL. Each t
 2. Begin a JDBC transaction.
 3. Attempt `INSERT ... ON CONFLICT DO NOTHING RETURNING sequence` into `transfer_requests`.
 4. If the key is already committed, read the stored request and compare its source, destination and amount. Return the original receipt only on exact match. PostgreSQL's unique-index conflict handling waits for a concurrent uncommitted winner before resolving `ON CONFLICT`.
-5. If this is a new key, lock source and destination account rows using `SELECT ... FOR UPDATE` in lexicographic account-ID order.
-6. Check available funds and calculate both new balances, rejecting numeric overflow.
-7. Update both account rows and **commit**. On any exception, **rollback**, including the idempotency-key insert.
+5. If this is a new key, lock source and destination account rows using `SELECT ... FOR NO KEY UPDATE` in lexicographic account-ID order.
+6. Use `FOR NO KEY UPDATE` (not `FOR UPDATE`) to lock mutable balances. The weaker lock still serializes concurrent balance updates but is compatible with the foreign-key `KEY SHARE` locks taken when a transfer request references account rows. `FOR UPDATE` caused a real deadlock in the first CI contention test despite account-ID ordering.
+7. Check available funds and calculate both new balances, rejecting numeric overflow.
+8. Update both account rows and **commit**. On any exception, **rollback**, including the idempotency-key insert.
 
 ## Invariants and examples
 
