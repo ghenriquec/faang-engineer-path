@@ -30,6 +30,12 @@ class PostgresLedgerTest {
         assertNotNull(url, "Set LEDGER_JDBC_URL to a disposable local PostgreSQL database");
         assertNotNull(user, "Set LEDGER_DB_USER");
         assertNotNull(password, "Set LEDGER_DB_PASSWORD");
+        assertEquals("I_ACCEPT_TABLE_RESET", System.getenv("LEDGER_TEST_RESET_CONFIRMATION"),
+                "Explicitly confirm that these destructive tests use a disposable database");
+        boolean loopback = url.startsWith("jdbc:postgresql://localhost:")
+                || url.startsWith("jdbc:postgresql://127.0.0.1:");
+        assertTrue(loopback && url.endsWith("/ledger_test"),
+                "Destructive tests require a local database named ledger_test");
 
         // This test drops these tables. Never supply production credentials.
         try (Connection connection = DriverManager.getConnection(url, user, password);

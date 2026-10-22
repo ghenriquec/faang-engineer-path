@@ -32,7 +32,7 @@ Store account balances and committed idempotency responses in PostgreSQL. Each t
 - The generated identity sequence can have gaps after rollback; it is not a gap-free monetary journal.
 - Money uses integer minor units but does not include a currency, scale, fee, or FX contract.
 - The demonstration does not implement a double-entry journal, reconciliation, audit log, RBAC, abuse limits or schema migrations.
-- The test harness **destroys** the named test tables before each test. This is suitable only for a disposable database.
+- The test harness **destroys** the named test tables before each test. It requires an explicit reset confirmation and refuses non-loopback JDBC URLs or database names other than `ledger_test`. These are safeguards, not a reason to run it against valuable data.
 
 ## Next engineering steps
 

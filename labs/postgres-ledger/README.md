@@ -21,14 +21,15 @@ Requires JDK 21, Maven and Docker Compose. From the repository root:
 
 ```bash
 docker compose -f labs/postgres-ledger/compose.yaml up -d --wait
-export LEDGER_JDBC_URL="jdbc:postgresql://localhost:15432/ledger"
+export LEDGER_JDBC_URL="jdbc:postgresql://localhost:15432/ledger_test"
 export LEDGER_DB_USER="ledger"
 export LEDGER_DB_PASSWORD="ledger"
+export LEDGER_TEST_RESET_CONFIRMATION="I_ACCEPT_TABLE_RESET"
 mvn -f labs/postgres-ledger/pom.xml --batch-mode verify
 docker compose -f labs/postgres-ledger/compose.yaml down -v
 ```
 
-The test-only credentials are deliberately local and the database is bound to loopback on port 15432. **Tests drop and recreate their named tables**; never reuse the environment variables with a real database.
+The test-only credentials are deliberately local and the database is bound to loopback on port 15432. The test harness refuses any non-loopback JDBC URL or database name other than `ledger_test`, and requires the explicit reset confirmation above. **Tests still drop and recreate their named tables**; never reuse these settings with a real database.
 
 If you already have a disposable PostgreSQL instance, set the same three environment variables to that instance instead.
 

@@ -21,7 +21,7 @@ Prerequisites: **JDK 21** and Maven.
 mvn -f labs/ledger-core/pom.xml --batch-mode verify
 ```
 
-This command runs eight JUnit tests, including multi-threaded duplicate submission and opposite-direction transfer cases. CI executes the same command on supported changes. The tests demonstrate the specific invariants asserted; they are not a formal proof of every possible interleaving.
+This command runs nine JUnit tests, including multi-threaded duplicate submission and opposite-direction transfer cases. CI executes the same command on supported changes. The tests demonstrate the specific invariants asserted; they are not a formal proof of every possible interleaving.
 
 ## Code map
 
