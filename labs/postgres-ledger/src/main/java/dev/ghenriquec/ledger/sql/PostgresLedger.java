@@ -88,7 +88,8 @@ public final class PostgresLedger {
                 }
 
                 // Consistent lock order: every transaction locks the
-                // lexicographically smaller account before the larger one.\n                // NO KEY UPDATE coexists with foreign-key KEY SHARE checks.
+                // lexicographically smaller account before the larger one.
+                // NO KEY UPDATE coexists with foreign-key KEY SHARE checks.
                 String firstId = source.compareTo(destination) < 0 ? source : destination;
                 String secondId = source.compareTo(destination) < 0 ? destination : source;
                 long firstBalance = lockedBalance(connection, firstId);
