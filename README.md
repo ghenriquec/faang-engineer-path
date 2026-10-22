@@ -1,59 +1,64 @@
-# Software Engineering Growth Roadmap
+# Software Engineering Labs & Roadmap
 
-**A personal learning roadmap for advanced backend engineering, architecture, and technical interviews.**
+**Practical Java engineering exercises, architecture decisions, and a transparent learning backlog.**
 
-> **Repository status:** planning/documentation only. This repository currently contains a roadmap and a license, **not** an implemented curriculum, project collection, or benchmark of completed interview exercises.
+This repository combines **implemented, testable labs** with a personal study roadmap. I use small, focused systems to explore failure handling, consistency, concurrency, and engineering trade-offs before adding infrastructure.
 
-The goal is to make learning goals specific, practical, and measurable without confusing planned work with finished projects.
+> A working lab is evidence of the particular behavior tested; it is **not** evidence of production-scale experience, security certification, or a deployed distributed system.
 
-## Focus areas
+## Implemented labs
 
-| Track | Topics to explore | Evidence to produce |
+| Lab | Language | Demonstrated concepts | Evidence |
+| --- | --- | --- | --- |
+| **[Ledger Core](labs/ledger-core/README.md)** | Java 21 | Atomic money movements in minor units, idempotency, ordered locks, contention and retry semantics | [JUnit tests](labs/ledger-core/src/test/java/dev/ghenriquec/ledger/LedgerTest.java) · [architecture ADR](labs/ledger-core/ARCHITECTURE.md) · [CI](.github/workflows/ledger-core.yml) |
+
+### Run Ledger Core
+
+```bash
+mvn -f labs/ledger-core/pom.xml --batch-mode verify
+```
+
+The lab is intentionally **in-memory and single-process**. It is not an HTTP API, database-backed ledger, or financial product. Its [architecture note](labs/ledger-core/ARCHITECTURE.md) explicitly discusses linearization, failure semantics, contention, durability gaps, and a safe evolution path.
+
+## Engineering tracks
+
+| Area | Practical goal | Progress |
 | --- | --- | --- |
-| 01 — CS fundamentals | Algorithms, data structures, complexity | Explained solutions, complexity analysis, tests |
-| 02 — Java backend | Spring Boot, concurrency, persistence, APIs | Documented service, unit and integration tests |
-| 03 — Software design | DDD, modularity, domain boundaries, API contracts | Architecture decision records, diagrams, trade-offs |
-| 04 — Distributed systems | Consistency, queues, idempotency, failures | Resilience experiments, failure-mode tests |
-| 05 — Cloud & delivery | Containers, CI/CD, infrastructure, observability | Reproducible deployments and operational notes |
-| 06 — Interviews | Coding exercises, system design, communication | Recorded problem-solving notes and mock interview feedback |
-| 07 — Open source | Reviewing, reporting, collaborating | Useful issues and pull requests with context |
+| Java and concurrency | Demonstrate atomic transfers, idempotency, lock ordering, and race tests | **Implemented:** Ledger Core lab |
+| Persistence and consistency | Use transaction boundaries, locking and replayable idempotency responses | Planned |
+| Distributed messaging | Study outbox, at-least-once delivery, deduplication and retry backoff | Planned |
+| Reliability | Define failure modes, SLOs, runbooks and observability | Planned |
+| System design | Publish case studies with constraints, alternatives and consequences | In progress: [Ledger Core ADR](labs/ledger-core/ARCHITECTURE.md) |
+| Cloud and delivery | Reproducible infrastructure and production-inspired CI/CD practices | Planned |
+| Algorithms and interviews | Explain complexity, test edge cases and evaluate trade-offs | Planned |
+| Open source | Submit useful issues and code contributions to external projects | Planned |
 
-The topics above are **study targets**. Their presence here does not mean they have been completed.
+## How an engineering lab earns a place here
 
-## Suggested workflow
+1. **Specify invariants and failure modes** before implementation.
+2. **Make trade-offs explicit:** the simplest correct design is the starting point.
+3. **Prove behavior** with executable tests and repeatable commands.
+4. **Document non-goals and limits,** especially around durability and security.
+5. **Use CI as a quality gate** and fix failed checks rather than suppress them.
+6. **Identify next experiments** without presenting them as shipped capabilities.
 
-For each topic:
+## Other public work
 
-1. **Define a problem** — a scenario and the constraints that matter.
-2. **Implement a minimal solution** — avoid introducing architecture without a reason.
-3. **Prove behavior** — tests, repeatable benchmarks, or validated examples.
-4. **Explain trade-offs** — why this design was chosen and what could go wrong.
-5. **Document the outcome** — what was measured, learned, or left unfinished.
+- [People Registration](https://github.com/ghenriquec/cadastro-pessoas) — Java / Spring Boot and React CRUD project.
+- [Universal Domain Rules Discovery](https://github.com/ghenriquec/universal-domain-rules-discover-skill) — structured domain discovery, validation, and test traceability.
+- [QA Sentinel](https://github.com/ghenriquec/qa-sentinel-skill) — portable, read-only QA audit protocol.
 
-## Example learning backlog
+## Next lab backlog
 
-- [ ] Implement an idempotent payment command using Java and a relational database.
-- [ ] Compare optimistic locking and explicit serialization under concurrent writes.
-- [ ] Document retry, timeout, and dead-letter strategies for asynchronous messaging.
-- [ ] Create an example REST API with authorization and integration tests.
-- [ ] Publish a system-design case study with clear constraints and alternative solutions.
-- [ ] Contribute a meaningful improvement to an external open-source repository.
-
-These unchecked items are ideas, **not promises or completed work**. Their sequence and scope can change.
-
-## Related projects
-
-Actual implementations and public artifacts are hosted in separate repositories:
-
-- [Universal Domain Rules Discovery](https://github.com/ghenriquec/universal-domain-rules-discover-skill) — agent-driven discovery, schema validation, and traceability.
-- [QA Sentinel](https://github.com/ghenriquec/qa-sentinel-skill) — evidence-based QA audit protocol.
-- [Clinic Management System](https://github.com/ghenriquec/clinic-management-system) — early-stage Next.js application prototype.
-
-For an overview of my professional background, visit [my GitHub profile](https://github.com/ghenriquec).
+- [ ] Compare the in-memory model to durable PostgreSQL transactions with unique idempotency keys.
+- [ ] Add controlled failure injection and a repeatable concurrency stress-test harness.
+- [ ] Evaluate optimistic locking against ordered pessimistic locks.
+- [ ] Produce an architecture case study on event delivery and reconciliation.
+- [ ] Establish a consistent benchmark methodology instead of publishing unsupported performance claims.
 
 ## Author
 
-**Guilherme Henrique** · [LinkedIn](https://www.linkedin.com/in/guihenriquecoelho/) · [GitHub](https://github.com/ghenriquec)
+**Guilherme Henrique** · [GitHub](https://github.com/ghenriquec) · [LinkedIn](https://www.linkedin.com/in/guihenriquecoelho/)
 
 ## License
 
