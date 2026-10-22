@@ -124,6 +124,43 @@ class LedgerTest {
     }
 
     @Test
+    void concurrentDifferentKeysCannotOverdrawAnAccount() throws Exception {
+        Ledger ledger = new Ledger();
+        ledger.openAccount("debit", 50);
+        ledger.openAccount("credit", 0);
+        CountDownLatch start = new CountDownLatch(1);
+        ExecutorService pool = Executors.newFixedThreadPool(16);
+        try {
+            List<Future<Boolean>> outcomes = new ArrayList<>();
+            for (int i = 0; i < 100; i++) {
+                int requestId = i;
+                outcomes.add(pool.submit(() -> {
+                    start.await();
+                    try {
+                        ledger.transfer("overdraft-" + requestId, "debit", "credit", 1);
+                        return true;
+                    } catch (Ledger.InsufficientFundsException expected) {
+                        return false;
+                    }
+                }));
+            }
+            start.countDown();
+            int succeeded = 0;
+            for (Future<Boolean> outcome : outcomes) {
+                if (outcome.get(20, TimeUnit.SECONDS)) {
+                    succeeded++;
+                }
+            }
+            assertEquals(50, succeeded);
+            assertEquals(0, ledger.balance("debit"));
+            assertEquals(50, ledger.balance("credit"));
+        } finally {
+            start.countDown();
+            pool.shutdownNow();
+        }
+    }
+
+    @Test
     void oppositeDirectionTransfersCompleteWithoutDeadlockOrMoneyCreation() throws Exception {
         Ledger ledger = new Ledger();
         ledger.openAccount("a", 1_000_000);
