@@ -17,14 +17,20 @@ These guarantees are tested with a disposable PostgreSQL instance. There is no H
 
 ## Execute the integration tests
 
-Requires JDK 21, Maven and a disposable PostgreSQL 16+ database with permissions to create and drop tables.
+Requires JDK 21, Maven and Docker Compose. From the repository root:
 
 ```bash
-export LEDGER_JDBC_URL="jdbc:postgresql://localhost:5432/ledger"
+docker compose -f labs/postgres-ledger/compose.yaml up -d --wait
+export LEDGER_JDBC_URL="jdbc:postgresql://localhost:15432/ledger"
 export LEDGER_DB_USER="ledger"
 export LEDGER_DB_PASSWORD="ledger"
 mvn -f labs/postgres-ledger/pom.xml --batch-mode verify
+docker compose -f labs/postgres-ledger/compose.yaml down -v
 ```
+
+The test-only credentials are deliberately local and the database is bound to loopback on port 15432. **Tests drop and recreate their named tables**; never reuse the environment variables with a real database.
+
+If you already have a disposable PostgreSQL instance, set the same three environment variables to that instance instead.
 
 The [GitHub Actions workflow](../../.github/workflows/postgres-ledger.yml) creates a throwaway PostgreSQL service with test-only credentials and executes the same command.
 
